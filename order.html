@@ -243,47 +243,47 @@
                 <div class="col-lg-7">
                     <div class="billing_details">
                         <h2 class="reg_title">Billing Detail</h2>
-                        <form class="billing_inner row">
+                        <form class="billing_inner row" id="orderForm">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="cun">Country <span>*</span></label>
-                                    <input type="text" class="form-control" id="country" aria-describedby="country" placeholder="">
+                                    <input type="text" class="form-control" id="country" aria-describedby="country" placeholder="" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="name">First Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="">
+                                    <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="last">Last Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="last" aria-describedby="last">
+                                    <input type="text" class="form-control" id="last" aria-describedby="last" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="address">Address <span>*</span></label>
-                                    <input type="text" class="form-control" id="address" aria-describedby="address">
+                                    <input type="text" class="form-control" id="address" aria-describedby="address" required>
                                     <input type="text" class="form-control" id="address2" aria-describedby="address">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="ctown">City / Town <span>*</span></label>
-                                    <input type="text" class="form-control" id="city" aria-describedby="city">
+                                    <input type="text" class="form-control" id="city" aria-describedby="city" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="email">Email <span>*</span></label>
-                                    <input type="email" class="form-control" id="email" aria-describedby="email">
+                                    <input type="email" class="form-control" id="email" aria-describedby="email" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="phone">Phone <span>*</span></label>
+                                    <label for="phone">Phone </label>
                                     <input type="text" class="form-control" id="phone" aria-describedby="phone">
                                 </div>
                             </div>
@@ -292,21 +292,22 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="cunt">Products(Can select multiple)<span>*</span></label>
-                                    <select class="form-control products" id="cunt" name="states[]" multiple="multiple" style="width:100%">
+                                    <label for="prod">Product<span>*</span></label>
+                                    <select class="form-control products" id="prod" style="width:100%">
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label for="name2">Quantities(100g, 50g, 250ml) <span>*</span></label>
-                                    <input type="text" class="form-control" id="name2" aria-describedby="name2" placeholder="">
+                                    <label for="quant">Quantity<span>*</span></label>
+                                    <select class="form-control quantity" id="quant" style="width:100%">
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="order">Order Notes <span>*</span></label>
-                                    <textarea class="form-control" id="order" rows="3"></textarea>
+                                    <textarea class="form-control" id="order" rows="3" required></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -345,7 +346,7 @@
                                     </div>
                                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                         <div class="card-body">
-                                                Select products to purchase in the products field. You can select multiple products as you wish
+                                                Select product to purchase in the products field. You can start typing the product name to do a qick search
                                         </div>
                                     </div>
                                 </div>
@@ -359,7 +360,7 @@
                                     </div>
                                     <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
-                                                Enter product quantity in the quantity field. If you have selected multiple products use commas to specify the different quantities. Ex assuming you selected <strong>CBD oil and OG kush strain</strong> a sample quantity could be <strong>250ml, 500g</strong>
+                                                Enter product quantity in the quantity field. If your quantity is not specified in the list, please do refer this in the order message field below
                                         </div>
                                     </div>
                                 </div>
@@ -488,33 +489,160 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
 <script src="vendors/jquery-ui/jquery-ui.js"></script>
 <script src="js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script>
+    $("#orderForm").validate({
+    //your normal options
+    submitHandler: function(){
+        $.ajax({
+            contentType: 'application/json',
+            data: '{"websiteId": 1,"country": $("#country").val(),"fName": $("#name").val(),"lName": $("#last").val(),"address1": $("#address").val(),"address2": $("#address2").val(),"city": $("#city").val(),"email": $("#email").val(),"phone": $("#phone").val(),"products": $("#prod").val(),"quantities": $("#quant").val(),"message": $("#order").val()}',
+            dataType: 'json',
+            success: function(data){
+                console.log("Data sent to server");
+            },
+            error: function(){
+                console.log("Order failed please check connection");
+            },
+            type: 'POST',
+            url: 'http://localhost:9000/order'
+        });
+    }
+});
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
-        var data = [
+        var quantity_data = [
             {
                 id: 0,
-                text: 'enhancement'
+                text: 'Half Ounce'
             },
             {
                 id: 1,
-                text: 'bug'
+                text: 'One Ounce'
             },
             {
                 id: 2,
-                text: 'duplicate'
+                text: 'Quater Pound'
             },
             {
                 id: 3,
-                text: 'invalid'
+                text: 'Half Pound'
             },
             {
                 id: 4,
-                text: 'wontfix'
+                text: 'One Pound'
+            },
+            {
+                id: 5,
+                text: '250ml'
+            },
+            {
+                id: 6,
+                text: '500ml'
+            },
+            {
+                id: 7,
+                text: '750ml'
+            },
+            {
+                id: 8,
+                text: '1L'
             }
+
+        ];
+        var products_data = [
+            {
+                id: 0,
+                text: 'Ak 47'
+            },
+            {
+                id: 1,
+                text: 'Blue Dream'
+            },
+            {
+                id: 2,
+                text: 'Girls Scout'
+            },
+            {
+                id: 3,
+                text: 'Grand Daddy'
+            },
+            {
+                id: 4,
+                text: 'Green Crack'
+            },
+            {
+                id: 5,
+                text: 'Moon Rocks'
+            },
+            {
+                id: 6,
+                text: 'Northern Light'
+            },
+            {
+                id: 7,
+                text: 'OG Kush'
+            },
+            {
+                id: 8,
+                text: 'Pebbles'
+            },
+            {
+                id: 9,
+                text: 'Purple Dream'
+            },
+            {
+                id: 10,
+                text: 'Purple Kush'
+            },
+            {
+                id: 11,
+                text: 'Rainbow'
+            },
+            {
+                id: 12,
+                text: 'Shaoline OG'
+            },
+            {
+                id: 13,
+                text: 'Sour Diesel'
+            },
+            {
+                id: 15,
+                text: 'White Widow'
+            },
+            {
+                id: 16,
+                text: 'Cannabis Oil'
+            },
+            {
+                id: 18,
+                text: 'CBD Oil'
+            },
+            {
+                id: 19,
+                text: 'Indica Seeds'
+            },
+            {
+                id: 20,
+                text: 'Sativa Seeds'
+            },
+            {
+                id: 21,
+                text: 'Hybrid Seeds'
+            }
+
+
         ];
         $('.products').select2({
-            data: data
+            data: products_data
         })
+        $('.quantity').select2({
+            data: quantity_data
+        })
+
+
     });
 </script>
 
