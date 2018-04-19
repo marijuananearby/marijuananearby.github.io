@@ -346,7 +346,7 @@
                                     </div>
                                     <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                         <div class="card-body">
-                                                Select product to purchase in the products field. You can start typing the product name to do a qick search
+                                                Select product to purchase in the products field. You can start typing the product name to do a quick search
                                         </div>
                                     </div>
                                 </div>
@@ -496,7 +496,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     submitHandler: function(){
         $.ajax({
             contentType: 'application/json',
-            data: '{"websiteId": 1,"country": $("#country").val(),"fName": $("#name").val(),"lName": $("#last").val(),"address1": $("#address").val(),"address2": $("#address2").val(),"city": $("#city").val(),"email": $("#email").val(),"phone": $("#phone").val(),"products": $("#prod").val(),"quantities": $("#quant").val(),"message": $("#order").val()}',
+            data: JSON.stringify({"websiteId": 1,"country": $("#country").val(),"fName": $("#name").val(),"lName": $("#last").val(),"address1": $("#address").val(),"address2": $("#address2").val(),"city": $("#city").val(),"email": $("#email").val(),"phone": $("#phone").val(),"products": $("#prod").val(),"quantities": $("#quant").val(),"message": $("#order").val()}),
             dataType: 'json',
             success: function(data){
                 console.log("Data sent to server");
@@ -504,7 +504,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             error: function(){
                 console.log("Order failed please check connection");
             },
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            },
             type: 'POST',
+            crossDomain: true,
             url: 'http://localhost:9000/order'
         });
     }
