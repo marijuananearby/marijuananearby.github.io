@@ -118,7 +118,7 @@
                         <div class="top_header_middle">
                             <a href="#">
                                 <i class="fa fa-phone"></i> Call Us:
-                                <span>+1 720-310-8493</span>
+                                <span>+1 (530) 656-8821</span>
                             </a>
                             <a href="#">
                                 <i class="fa fa-envelope"></i> Email:
@@ -889,22 +889,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     submitHandler: function(){
         $.ajax({
             contentType: 'application/json',
-            data: JSON.stringify({"websiteId": 1,"country": $("#country").val(),"fName": $("#name").val(),"lName": $("#last").val(),"address1": $("#address").val(),"address2": $("#address2").val(),"city": $("#city").val(),"email": $("#email").val(),"phone": $("#phone").val(),"products": $("#prod").val(),"quantities": $("#quant").val(),"message": $("#order").val()}),
             dataType: 'json',
-            success: function(data){
+            success: function(){
                 console.log("Data sent to server");
             },
             error: function(){
                 console.log("Order failed please check connection");
             },
             headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, PUT',
-                'Access-Control-Allow-Headers': 'Content-Type'
+                'X-Auth-Token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVwvVDg5RnBaYTl2MDlWUlV3QXRaNUZObHBLWGJzTXhzdXd2Rjd2citUOFBieE13eFdhRVhFY2ROVllkODZ3NG9HZ0w3aHFqZ2FPZllncTBadENMMFliQT09IiwiaXNzIjoicGxheS1zaWxob3VldHRlIiwiZXhwIjoxNTI2OTQ4MTczLCJpYXQiOjE1MjY5MDQ5NzMsImp0aSI6IjEzYTVkODVjYjhlMTg3M2RhYTQ4Y2UyODQ4YzIzM2Y4YmYyZjEyY2MxMjNiZmRhZjgyMTZjN2RjMmUyNDY3YTgzN2JlMTQ1NjNlNmJlNmU3NDgzZTEwNzMxMzI3M2FhNmM4ZThjOWMxMDA3MTgzNTRmMzVmNDViMzkzOWNkYmI1YmQ4MGYwZTk2ZTI4YmMwMDBhM2E0MGUwMjM1MzkzYjBhNDViNDlkNWY1NjAxNzQ1ZWEyMDliOWE3OGMyZmRkMTU5NWE0NGQwYjlmNzJiY2ZhNzU1NGUxYTNlZWRlZThkNDg0ZjI5MzZmZDk4NzljNDFmYTJhZTM1OTM1NWU5YzEifQ._kE_vp8RJlo_sJSgvq-0dMZnx-05pAcP6Yu9S8k7Va0',
+            
             },
-            type: 'POST',
+            type: 'GET',
             crossDomain: true,
-            url: 'http://localhost:9000/order'
+            url: 'http://agora-rest-api.herokuapp.com/api/v1/user'
         });
     }
 });
